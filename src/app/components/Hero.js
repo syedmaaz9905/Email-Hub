@@ -6,7 +6,7 @@ import { useContext, useState } from "react"
 import Search from "./Search"
 
 // Search Context
-import { SearchContext } from "../context/Search"
+// import { SearchContext } from "../context/Search"
 
 // Lottie
 import Lottie from 'lottie-react';
@@ -23,7 +23,7 @@ import { fadeIn } from "../../../variants";
 
 const Hero = () => {
 
-    const { searchActive } = useContext(SearchContext)
+    // const { searchActive } = useContext(SearchContext)
 
     const [animationPlayed, setAnimationPlayed] = useState(false);
 

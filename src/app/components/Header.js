@@ -18,11 +18,11 @@ import { useMediaQuery } from "react-responsive";
 import { BiMenuAltRight, BiX } from 'react-icons/bi';
 
 // Search Context
-import { SearchContext } from "../context/Search";
+// import { SearchContext } from "../context/Search";
 
 const Header = () => {
 
-    const { setSearchActive } = useContext(SearchContext)
+    // const { setSearchActive } = useContext(SearchContext)
 
     const [header, setHeader] = useState(false);
     const [nav, setNav] = useState(false);
