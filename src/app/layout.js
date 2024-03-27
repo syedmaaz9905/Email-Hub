@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 // Search Context Provider
-import { SearchContextProvider } from "./context/Search";
+// import { SearchContextProvider } from "./context/Search";
 
 export default function RootLayout({ children }) {
   return (
