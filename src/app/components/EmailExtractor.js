@@ -17,16 +17,58 @@ import buttonAnimationData from './../../../public/animated_videos/emailExtracto
 const EmailExtractor = () => {
 
     const [animationPlayed, setAnimationPlayed] = useState(false);
+    const [textEmailAreaValue, setTextEmailAreaValue] = useState('');
+    const [textResultValue, setTextResultValue] = useState('')
 
     const handleButtonClick = () => {
         setAnimationPlayed(true);
-    };
+        console.log("Hello")
 
-    const [textareaValue, setTextareaValue] = useState('');
+        console.log(textEmailAreaValue, 'This is the text')
+
+        var outputText = extractEmails(textEmailAreaValue);
+
+        outputText = [...new Set(outputText)];
+
+        outputText = categorizeEmails(outputText);
+
+        console.log(outputText)
+        console.log(outputText.join('\n'))
+
+        setTextResultValue(outputText.join('\n'))
+
+    };
 
     const handleClearButtonClick = () => {
-        setTextareaValue('');
+        setTextEmailAreaValue('');
+        setTextResultValue('');
     };
+
+    function extractEmails(text) {
+        const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+
+        const emails = text.match(emailRegex);
+
+        return emails || [];
+    }
+
+    function categorizeEmails(emails) {
+        const emailCategories = {};
+
+        emails.forEach(email => {
+            const domain = email.split('@')[1];
+            
+            const serviceProvider = domain.split('.')[0];
+            
+            if (emailCategories[serviceProvider]) {
+                emailCategories[serviceProvider].push(email);
+            } else {
+                emailCategories[serviceProvider] = [email];
+            }
+        });
+
+        return emailCategories;
+    }
 
     return (
         <section className="section h-[1500px] xsm:h-[1300px] md:h-[1000px] flex items-center bg-[#b2b7c2]/10" id="emailextractor">
@@ -69,8 +111,8 @@ const EmailExtractor = () => {
                                     viewport={{ once: false, amount: 0.6 }}
                                     className='bg-[#ffffff] text-[#666666] p-3 rounded-[10px] border-2 border-solid border-slate-200 outline-none w-[100%] h-[300px] resize-none'
                                     placeholder='Enter the text/content (max: 100k characters)'
-                                    value={textareaValue}
-                                    onChange={(e) => setTextareaValue(e.target.value)}
+                                    value={textEmailAreaValue}
+                                    onChange={(e) => setTextEmailAreaValue(e.target.value)}
                                 >
 
                                 </motion.textarea>
@@ -127,8 +169,8 @@ const EmailExtractor = () => {
                                 whileInView={"show"}
                                 viewport={{ once: false, amount: 0.6 }}
                                 class="w-[100%] h-36 overflow-y-auto border-2 border-solid bg-white p-4 rounded-md flex flex-col"
+                                value={textResultValue}
                             >
-
                             </motion.div>
                         </div>
 
